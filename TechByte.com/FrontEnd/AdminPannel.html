@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href=logo.png
+    />
+    <title>Admin Pannel</title>
+</head>
+<style>
+    *{
+        margin: 0%;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+#navbar{
+    background-color: brown;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#main{
+    background-color: #8BC6EC;
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    width: 100%;
+    height: 750px;
+    display: flex;
+    
+}
+#main>div{
+  
+    height: 500px;
+    width: 50%;
+}
+#box1{
+    margin-top: 50px;
+}
+#box1>div{
+    border: solid black;
+    display: flex;
+    justify-content: space-between;
+    background-color: aliceblue;
+    padding: 15px;
+    border-radius: 20px;
+    height: 35px;
+    margin-bottom: 20px;
+    
+}
+#box1>div>button{
+    background-color: red;
+    border: none;
+    width: 100px;
+    height: 35px;
+    color: white;
+    border-radius: 20px;
+}
+#box1>div>button:hover{
+    cursor: pointer;
+}
+#box1>div>button:hover {
+        transform: scale(1.05);
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    }
+#box2{
+    margin-top: 50px;
+    padding: 50px;
+
+}
+#box2>input{
+    
+    width: 80%;
+    height: 20px;
+}
+#logoInsideBox{
+    border: solid red;
+    width: 90%;
+    height: 400px;
+}
+</style>
+<body>
+    <nav>
+        <div id="navbar">
+            <div>
+                <h3>
+                    Admin Control Pannel
+                </h3>
+            </div>
+        </div>
+    </nav>
+    <div id="main">
+        <div id="box1">
+            <div>
+                <h2>Add Products to Database</h2>
+                <button id="addProductButton">Click here</button>
+            </div>
+            <div>
+                <h2>Remove Product from database</h2>
+                <button>Click here</button>
+            </div>
+            <div>
+                <h2>Get all Product From Database</h2>
+                <button>Click here</button>
+            </div>
+            <div>
+                <h2>All Sales Details</h2>
+                <button>Click here</button>
+            </div>
+        </div>
+        <div id="box2">
+            <img id="logoInsideBox" src=logo.png alt="Logo">
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    var box2=document.getElementById("box2");
+    let addProduct=()=>{
+        window.location.href="AddProduct.html"
+    }
+    let addButton = document.getElementById("addProductButton");
+    addButton.addEventListener("click",addProduct);
+    
+</script>

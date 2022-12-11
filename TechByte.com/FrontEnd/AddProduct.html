@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Add Product</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    *{
+      margin: 0%;
+    }
+    #main{
+      margin: auto;
+      width: 100%;
+      height: 500px;
+      padding: 20px;
+    }
+    #main>form{
+      padding: 10px;
+      width: 35%;
+      margin: auto;
+      background-color: rgb(193, 222, 247);
+      height: 450px;
+      border-radius: 10px;
+    }
+    #nav{
+      color:  brown;
+      font-size: medium;
+      font-family: monospace;
+      height: 50px;
+      background-color: cadetblue;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #submit:hover {
+        transform: scale(1.05);
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    }
+    input {
+        width: 90%;
+        border: solid #4355ae;
+        border-radius: 10px;
+        height: 30px;
+        margin-bottom: 18px;
+    }
+    
+    input:hover {
+        cursor: pointer;
+    }
+    
+    p {
+        margin: 0%;
+        margin-bottom: 3px;
+        font-size: 20px;
+        font-weight: bold;
+    }
+    
+    .second_box>div:nth-child(2) {
+        height: 75%;
+        margin-top: 30px;
+    }
+    
+    .second_box>div:nth-child(3) {
+        display: flex;
+        justify-content: right;
+    }
+    
+    .second_box>div:nth-child(3)>p {
+        font-size: 15px;
+    }
+    
+    #submit {
+        border: none;
+        display: block;
+        margin: auto;
+        margin-top: 15px;
+        width: 60%;
+        height: 50px;
+        color: white;
+        font-size: 19px;
+        font-weight: bold;
+        background-color: #f8633d;
+        border-radius: 10px;
+    }
+  </style>
+  </head>
+  <body>
+    <nav>
+      <div id="nav">
+        <div>
+          <h3>
+              Admin Control Pannel
+          </h3>
+      </div>
+      </div>
+    </nav>
+    <div id="main">
+      <form id="form">
+          <p>Product Name</p>
+          <input type="text" id="name" required="required" placeholder="Enter your full name">
+          <p>Product Image Link </p>
+          <input type="text" id="link" required="required" placeholder="Enter product image link">
+          <p>Price</p>
+          <input type="text" id="price" placeholder="Enter product price">
+          <p>Category</p>
+          <input type="text" id="category" required="required" placeholder="Enter product category">
+          <p>Brand</p>
+          <input type="text" id="brand" required="required" placeholder="Enter product brand">
+          <input type="submit" id="submit" value="Add Product to Database">
+      </form>
+    </div>
+  </body>
+</html>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+ /* {
+  "brand": "string",
+  "category": {
+    "category": "string",
+    "category_Id": 0
+  },
+  "image": "string",
+  "price": 0,
+  "productId": 0,
+  "productName": "string",
+  "rating": 0,
+}*/
+
+async function addProductToDataBase(data,adminKey){
+
+try{
+    let response = await fetch(`http://localhost:8888/product/add/?adminKey=${adminKey}`, {
+    method:"POST",
+    body: JSON.stringify(data),
+    headers : { 'Content-Type': 'application/json'},
+})
+let responseData = await response.json();
+if(responseData.message != null){
+    alert(responseData.message)
+}else{
+    console.log(response)
+    alert("Product added Succesfully")
+}
+
+}catch(e){
+    console.log(e)
+    return e;
+}
+
+}
+document.querySelector("#form").addEventListener("submit", submitted)
+    function submitted(){
+        event.preventDefault();
+
+        let key=JSON.parse(localStorage.getItem("AdminKey"));
+
+        var obj={
+            productId: 0,
+            productName:form.name.value,
+            image:form.link.value,
+            price:form.price.value,
+            brand:form.brand.value,
+            rating: 0,
+            category: {
+                category: form.category.value,
+                category_Id: 0
+              }
+        }
+      addProductToDataBase(obj)
+    }
+</script>
