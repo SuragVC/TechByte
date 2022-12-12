@@ -1,5 +1,8 @@
 package com.techbyte.controller;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itextpdf.text.DocumentException;
 import com.techbyte.entity.LogIn;
 import com.techbyte.exception.LoginException;
+import com.techbyte.exception.PDFGenerationException;
 import com.techbyte.services.LoginService;
+import com.techbyte.util.GmailServiceProvider;
 
 
 @CrossOrigin(origins = "*")
@@ -24,6 +30,7 @@ public class LoginControllers {
 	
 	@Autowired
 	private LoginService loginService;
+
 	
 	@PostMapping("/login")
 	public ResponseEntity<String> loginHandler(@Valid @RequestBody LogIn loginData) throws LoginException {
@@ -38,6 +45,6 @@ public class LoginControllers {
 		return new ResponseEntity<String>(logout,HttpStatus.OK);
 	}
 	
-	
+
 	
 }

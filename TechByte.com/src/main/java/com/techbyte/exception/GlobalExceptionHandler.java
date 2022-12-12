@@ -40,6 +40,11 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
 	}
 	
+	@ExceptionHandler(PDFGenerationException.class)
+	public ResponseEntity<MyErrorDetails>pDFGenerationException(PDFGenerationException exception , WebRequest request){
+		MyErrorDetails errorDetails = new MyErrorDetails(LocalDateTime.now(), exception.getMessage(), request.getDescription(false));
+		return new ResponseEntity<MyErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
+	}
 	
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<MyErrorDetails> userNotFoundException(UserNotFoundException exception , WebRequest request){

@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService{
 		cartDao.save(cart);
 		newSignUp.setCart(cart);
 		signUpDAO.save(newSignUp);
-		
+		newSignUp.setOtpId(1);
 		newSignUp.setStatus(UserStatus.ACTIVE);
 		return newSignUp;
 	}

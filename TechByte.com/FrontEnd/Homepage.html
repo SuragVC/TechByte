@@ -25,10 +25,11 @@ body{
 	margin: 0;
 	padding: 0;
 }
+
 i {
 	margin-right: 10px;
 }
-/*----------bootstrap-navbar-css------------*/
+
 .navbar-logo{
 	padding: 15px;
 	color: #fff;
@@ -394,9 +395,25 @@ ul {
 .span_hovred:hover{
     color: rgb(255, 174, 0);
 }
+#myVideo {
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.content {
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+
+
   </style>
   <body>
-    <nav class="navbar navbar-expand-custom navbar-mainbg">
+    <nav class="navbar navbar-expand-custom navbar-mainbg" id="navbar">
       <a class="navbar-brand navbar-logo black_hover" href="index.html">TechByte</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto"> 
@@ -418,6 +435,11 @@ ul {
   <section>
     <div id="addvertise_Bar"></div>
 	<div id="trending_h3_section"><h3>Trending Now</h3></div>
+    <section>
+        <video autoplay muted loop id="myVideo">
+            <source src="videos/AppleWatchAdd.mp4" type="video/mp4">
+          </video>
+    </section>
     <div id="display"></div>
   </section>
   <section>
@@ -632,5 +654,20 @@ async function logoutFunction(){
     localStorage.setItem("UserKey",null)
     alert("Logout successfull")
     window.location.href="index.html"
+}
+var video = document.getElementById("myVideo");
+
+n
+var btn = document.getElementById("myBtn");
+
+
+function myFunction() {
+  if (video.paused) {
+    video.play();
+    btn.innerHTML = "Pause";
+  } else {
+    video.pause();
+    btn.innerHTML = "Play";
+  }
 }
 </script>

@@ -1,5 +1,6 @@
 package com.techbyte.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.itextpdf.text.DocumentException;
 import com.techbyte.entity.Order;
 import com.techbyte.exception.LoginException;
+import com.techbyte.exception.OTPValidataionException;
 import com.techbyte.exception.OrderException;
+import com.techbyte.exception.PDFGenerationException;
 import com.techbyte.exception.PaymentException;
 import com.techbyte.exception.ProductException;
 import com.techbyte.services.OrderServices;
@@ -27,7 +32,7 @@ public class OrderController {
 		this.orderService = orderService;
 	}
 	@PostMapping("/create/{key}")
-	public ResponseEntity<Order>createAorder(@RequestParam String key,@RequestBody Order order) throws ProductException, LoginException, PaymentException{
+	public ResponseEntity<Order>createAorder(@RequestParam String key,@RequestBody Order order) throws ProductException, LoginException, PaymentException, PDFGenerationException, DocumentException, IOException, OTPValidataionException{
 		Order savedOrder = orderService.createAnewOrder(key, order);
 		return new ResponseEntity<Order>(savedOrder,HttpStatus.ACCEPTED);
 	}

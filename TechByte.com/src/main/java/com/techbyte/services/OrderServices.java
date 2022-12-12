@@ -1,18 +1,22 @@
 package com.techbyte.services;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
+import com.itextpdf.text.DocumentException;
 import com.techbyte.entity.Order;
 import com.techbyte.entity.OrderStatus;
 import com.techbyte.entity.SalesReportDates;
 import com.techbyte.exception.LoginException;
+import com.techbyte.exception.OTPValidataionException;
 import com.techbyte.exception.OrderException;
+import com.techbyte.exception.PDFGenerationException;
 import com.techbyte.exception.PaymentException;
 import com.techbyte.exception.ProductException;
 
 public interface OrderServices {
-	public Order createAnewOrder(String key,Order order)throws ProductException,LoginException,PaymentException;
+	public Order createAnewOrder(String key,Order order)throws ProductException,LoginException,PaymentException, PDFGenerationException, DocumentException, IOException, OTPValidataionException;
 	public String cancelAnOrder(String key,Integer orderId)throws ProductException,LoginException,PaymentException,OrderException;
 	public List<Order>allOrderOfCustomer(String key)throws LoginException,OrderException;
 	public List<Order>getAllCanceledOrders(String adminkey)throws LoginException,OrderException;

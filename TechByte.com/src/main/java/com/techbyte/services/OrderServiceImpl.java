@@ -1,5 +1,6 @@
 package com.techbyte.services;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.text.DocumentException;
 import com.techbyte.entity.Address;
 import com.techbyte.entity.Cart;
 import com.techbyte.entity.CurrentSessionAdmin;
@@ -24,7 +26,9 @@ import com.techbyte.entity.RandomIdGenerator;
 import com.techbyte.entity.SalesReportDates;
 import com.techbyte.entity.User;
 import com.techbyte.exception.LoginException;
+import com.techbyte.exception.OTPValidataionException;
 import com.techbyte.exception.OrderException;
+import com.techbyte.exception.PDFGenerationException;
 import com.techbyte.exception.PaymentException;
 import com.techbyte.exception.ProductException;
 import com.techbyte.repository.AddressDAO;
@@ -34,6 +38,7 @@ import com.techbyte.repository.PaymentDAO;
 import com.techbyte.repository.ProductDAO;
 import com.techbyte.repository.SessionDAO;
 import com.techbyte.repository.UserDAO;
+import com.techbyte.util.GmailServiceProvider;
 
 @Service
 public class OrderServiceImpl implements OrderServices {
@@ -44,43 +49,24 @@ public class OrderServiceImpl implements OrderServices {
 	private ProductDAO productDao;
 	private SessionDAO sessionDao;
 	private AdminSessionDAO adminDao;
-	@Autowired
-	public void setAdminDao(AdminSessionDAO adminDao) {
-		this.adminDao = adminDao;
-	}
+	private GmailServiceProvider gmailService;
 
 	@Autowired
-	public void setSessionDao(SessionDAO sessionDao) {
-		this.sessionDao = sessionDao;
-	}
-
-	@Autowired
-	public void setOrderDao(OrderDAO orderDao) {
+	public OrderServiceImpl(OrderDAO orderDao, PaymentDAO paymentDao, AddressDAO addressDao, UserDAO userDao,
+			ProductDAO productDao, SessionDAO sessionDao, AdminSessionDAO adminDao,GmailServiceProvider gmailService) {
+		super();
 		this.orderDao = orderDao;
-	}
-
-	@Autowired
-	public void setPaymentDao(PaymentDAO paymentDao) {
 		this.paymentDao = paymentDao;
-	}
-
-	@Autowired
-	public void setAddressDao(AddressDAO addressDao) {
 		this.addressDao = addressDao;
-	}
-
-	@Autowired
-	public void setUserDao(UserDAO userDao) {
 		this.userDao = userDao;
-	}
-
-	@Autowired
-	public void setProductDao(ProductDAO productDao) {
 		this.productDao = productDao;
+		this.sessionDao = sessionDao;
+		this.adminDao = adminDao;
+		this.gmailService=gmailService;
 	}
 
 	@Override
-	public Order createAnewOrder(String key, Order order) throws ProductException, LoginException, PaymentException {
+	public Order createAnewOrder(String key, Order order) throws ProductException, LoginException, PaymentException, PDFGenerationException, DocumentException, IOException, OTPValidataionException {
 		order.setOrderId(RandomIdGenerator.getHighLegthID());
 		order.setDate(LocalDate.now());
 		order.setTime(LocalTime.now());
@@ -177,6 +163,10 @@ public class OrderServiceImpl implements OrderServices {
 		paymentDao.save(payment);
 		orderDao.save(order);
 		orderList.add(order);
+		int otp=(int)user.get().getOtpId();
+		if(otp!=1) {
+			gmailService.OrderGmailSender(user.get(), order);
+		}
 		userDao.save(user.get());
 		return order;
 	}
