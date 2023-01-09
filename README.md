@@ -1,5 +1,5 @@
 <h1 align="center">TechByte</h1>
-TechByte is an imaginary e-commerce website for selling tech products. This is an frontend and backend project created with the tech stacks Java, Spring, SpringBoot, MySQL, JavaScript, CSS,HTML  and BootStrap.
+TechByte is an imaginary e-commerce website for selling tech products. This is an frontend and backend project created with the tech stacks Java, Spring, SpringBoot, MySQL, HTML, CSS, JavaScript and BootStrap.
 <h3># FEATURES</h3>
 <h2>Admin Side</h2>
 <p>-> Admin Register & Admin Login with validation.</p>
